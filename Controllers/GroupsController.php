@@ -27,6 +27,13 @@ class GroupsController extends AppController
      */
     public function addAction()
     {
+        $post = $this->getPost();
+        $group_id = 0;
+        if (isset($post['sub'])) {
+            $group_id = $this->groupAdd($post['data']);
+            header("Location:/groups/detail/$group_id");
+            return;
+        }
         $owners = (new Owners())->get();
         $this->set('owners', $owners);
         $this->disp('/Groups/add.php');
@@ -40,8 +47,15 @@ class GroupsController extends AppController
     {
         // 編集してきたかの判定
         $post = $this->getPost();
-        if (isset($post['sub'])) {
+        if (isset($post['edit'])) {
             $this->editCommit($post['data']);
+            header("Location:/");
+            return;
+        }
+
+        // メンバー設定されてきたか
+        if (isset($post['sub'])) {
+            $this->memberAdd($post['data']);
         }
 
         $group = $this->getGroup();
@@ -74,10 +88,14 @@ class GroupsController extends AppController
           }
         }
 
+        $sql = "SELECT `name` FROM `routes`";
+        $routes = $model->find($sql);
+
         $this->set('records', $new_arr);
         $this->set('group', $group);
+        $this->set('routes', $routes);
         $this->disp('/Groups/detail.php');
-    }    
+    }
 
     /**
      * グループ削除
@@ -110,7 +128,7 @@ class GroupsController extends AppController
      * @param  array $data POSTデータ
      * @return void
      */
-    public function editCommit($data)
+    private function editCommit($data)
     {
         $group = $data['group'];
         $group['id'] = $this->getId();
@@ -133,6 +151,77 @@ class GroupsController extends AppController
         $sql = "UPDATE `owners` SET `name` = '{$owner['name']}', `mail` = '{$owner['mail']}' WHERE `owner_id` = {$owner['id']}";
         if (!$model->query($sql)) {
             echo "オーナー失敗";
+        }
+    }
+
+    /**
+     * グループの新規登録
+     * @param  array $data POSTデータ
+     * @return integer 登録されたグループID(失敗した時は0)
+     */
+    private function groupAdd($data)
+    {
+        // 通知先がすでに登録されていないかチェック
+        $owner = $data['owner'];
+        $sql = "SELECT * FROM `owners` WHERE `mail` = '{$owner['mail']}'";
+        $model = new AppModel();
+        $row = $model->find($sql);
+        if (count($row) == 0) {
+            // 未登録の場合は新規登録する
+            $sql = "INSERT INTO `owners`(`name`, `mail`) values('{$owner['name']}', '{$owner['mail']}')";
+            if ($model->query($sql)) {
+                $owner['id'] = $model->getInsertId();
+            } else {
+                return 0;
+            }
+        } else {
+            // 登録済みの場合はidを取得
+            $owner['id'] = $row[0]['owner_id'];
+        }
+        // グループ登録
+        $sql = "INSERT INTO `groups`(`name`, `owner_id`) values('{$data['group']['name']}', {$owner['id']})";
+        if (!$model->query($sql)) {
+            return 0;
+        }
+        return $model->getInsertId();
+    }
+
+    /**
+     * メンバー設定を保存する
+     * @param  array $data POSTデータ
+     * @return void
+     */
+    private function memberAdd($data)
+    {
+        $group_id = $this->getId();
+        $model = new AppModel();
+        $sql = "DELETE FROM `members` WHERE `group_id` = $group_id";
+        $model->query($sql);
+        if (count($data) == 0) {
+            return;
+        }
+        $sql = "SELECT `route_id`, `name` FROM `routes`";
+        $routes = $model->find($sql);
+        foreach ($data['route'] as &$value) {
+            $value = explode(',', $value);
+            foreach ($value as &$val) {
+                foreach ($routes as $route) {
+                    if ($route['name'] == $val) {
+                        $val = $route['route_id'];
+                        break;
+                    }
+                }
+            }
+            unset($val);
+        }
+        unset($value);
+        for ($i = 0; $i < count($data['id']); $i++) {
+            $sql = "INSERT INTO `members` values({$data['id'][$i]}, '{$data['name'][$i]}', {$group_id}, null)";
+            $result = $model->query($sql);
+            foreach ($data['route'][$i] as $route) {
+                $sql = "INSERT INTO `member_route` values({$data['id'][$i]}, '{$route}')";
+                $model->query($sql);
+            }
         }
     }
 }
