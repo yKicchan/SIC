@@ -1,0 +1,12 @@
+.right{
+    float: right;
+}
+.groups{
+    border-top: 2px solid #f90;
+}
+.cell{
+    padding: 6px 12px;
+}
+td[colspan="5"]{
+    text-align: center;
+}

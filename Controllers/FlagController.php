@@ -3,7 +3,7 @@ class FlagController extends AppController{
 
   //路線表のis_late列を全て0にするメソッド
   public function initializeAction(){
-    $sql = "UPDATE `route` SET `is_late` = 0";
+    $sql = "UPDATE `routes` SET `is_late` = 0";
     $model = new AppModel();
 
     if($model->query($sql)){

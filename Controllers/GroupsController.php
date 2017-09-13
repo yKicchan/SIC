@@ -14,10 +14,7 @@ class GroupsController extends AppController
      */
     public function editAction()
     {
-        // URLからID取得
-        $id = $this->getId();
-        $model = new Groups();
-        $group = $model->get($id);
+        $group = $this->getGroup();
         $this->set('group', $group);
         $this->disp('/Groups/edit.php');
     }
@@ -32,5 +29,19 @@ class GroupsController extends AppController
         $owners = $model->get();
         $this->set('owners', $owners);
         $this->disp('/Groups/add.php');
+    }
+
+    public function detailAction()
+    {
+        $group = $this->getGroup();
+        $this->set('group', $group);
+        $this->disp('/Groups/detail.php');
+    }
+
+    private function getGroup()
+    {
+        $id = $this->getId();
+        $model = new Groups();
+        return $model->get($id);
     }
 }

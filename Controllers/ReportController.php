@@ -15,7 +15,8 @@ class ReportController extends AppController
     public function __construct()
     {
         parent::__construct();
-        $this->url = "https://rti-giken.jp/fhc/api/train_tetsudo/delay.json";
+        // $this->url = "https://rti-giken.jp/fhc/api/train_tetsudo/delay.json";
+        $this->url = "../Config/delay.json";
     }
 
     /**
@@ -28,10 +29,8 @@ class ReportController extends AppController
     {
         $subject = "遅延情報のお知らせ";
         $from = "from@from.com";
-        //$smtp_user = "ecccomp.sic@gmail.com";
-        //$smtp_password = "123qwecc";
-        $smtp_user = "mailtesting5432@gmail.com";
-        $smtp_password = "kakihurai";
+        $smtp_user = "ecccomp.sic@gmail.com";
+        $smtp_password = "123qwEcc";
 
         $mail = new PHPMailer();
         $mail->IsSMTP();
@@ -50,7 +49,7 @@ class ReportController extends AppController
         $mail->Body = $body;
 
         // 宛先
-      $mail->AddAddress(/*$to*/ "mailtesting6543@gmail.com");
+      $mail->AddAddress(/*$to*/ "ykicchanapp@gmail.com");
 
         if(!$mail->Send()){
             $message  = "Message was not sent<br/ >";
@@ -76,7 +75,7 @@ class ReportController extends AppController
 
         //学生の名前と、路線名を取得する
         $model = new AppModel();
-        $sql  = 'SELECT m.name student, m.member_id id, r.name route, m.group_id class FROM member_route mr, route r, members m WHERE mr.route_id = r.route_id AND m.member_id = mr.member_id AND r.is_late = 0';
+        $sql  = 'SELECT m.name student, m.member_id id, r.name route, m.group_id class FROM member_route mr, routes r, members m WHERE mr.route_id = r.route_id AND m.member_id = mr.member_id AND r.is_late = 0';
         $row = $model->find($sql);
 
         $body = "";
@@ -113,6 +112,7 @@ class ReportController extends AppController
             $sql  = 'SELECT `name`, `mail` FROM `owners` WHERE owner_id = ' . $key;
             $row = $model->find($sql);
 
+            // $this->mailSetting($row[0]['mail'], $body);
             $this->mailSetting($row[0]['mail'], $body);
         }
     }
