@@ -1,4 +1,6 @@
 <?php
+// メールライブラリの読み込み
+require_once '../Other/PHPMailer/PHPMailerAutoload.php';
 /**
  * 自動実行されるページを扱うクラス
  *

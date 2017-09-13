@@ -150,27 +150,6 @@ abstract class Model
     }
 
     /**
-     * UPDATE文を実行するメソッド
-     *
-     * @param  integer $id   更新するレコードの一意なID
-     * @param  array   $data 更新するレコードのデータ
-     * @return boolean       クエリ実行結果
-     */
-    public function update($id, $data) {
-        $substitution = array();
-        foreach ($data as $key => $value) {
-            if (is_int($value)) {
-                $substitution[] = "`$key`=$value";
-            } else {
-                $substitution[] = "`$key`='$value'";
-            }
-        }
-        $set = implode(',', $substitution);
-        $sql = "UPDATE `$this->tableName` SET $set WHERE `id` = $id";
-        return $this->mysqli->query($sql);
-    }
-
-    /**
      * エスケープ処理
      *
      * @param  string $value エスケープする文字列
