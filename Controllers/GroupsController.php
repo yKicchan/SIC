@@ -45,6 +45,12 @@ class GroupsController extends AppController
         }
 
         $group = $this->getGroup();
+        $model =new AppModel();
+        $key = $group["group_id"];
+        $sql  = 'SELECT m.member_id AS \'member_id\', m.name AS \'name\', r.name AS \'line\', m.mail AS \'mail\' FROM members m, member_route mr, routes r WHERE m.member_id = mr.member_id AND mr.route_id = r.route_id AND m.group_id = ' . $key;
+        $row = $model->find($sql);
+
+        $this->set('records', $row);
         $this->set('group', $group);
         $this->disp('/Groups/detail.php');
     }
