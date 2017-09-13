@@ -15,6 +15,7 @@ class AppController extends Controller
     {
         parent::__construct();
         $this->setViewDir('/Views');
+        $this->set('title', "I'll be late.");
     }
 
     /**
@@ -25,7 +26,9 @@ class AppController extends Controller
     public function disp($fileName)
     {
         $data = $this->get();
+        require_once '../Views/header.php';
         require_once '../Views' . $fileName;
+        require_once '../Views/footer.php';
     }
 
     /**

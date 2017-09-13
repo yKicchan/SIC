@@ -15,7 +15,12 @@ class IndexController extends AppController
      */
     public function indexAction()
     {
-        // トップページ表示
+        // グループの情報をセット
+        $model = new Groups();
+        $groups = $model->get();
+        $this->set('groups', $groups);
+
+        // ダッシュボード表示
         $this->disp('/index.php');
     }
 }
