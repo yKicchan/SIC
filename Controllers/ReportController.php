@@ -28,8 +28,10 @@ class ReportController extends AppController
     {
         $subject = "遅延情報のお知らせ";
         $from = "from@from.com";
-        $smtp_user = "ecccomp.sic@gmail.com";
-        $smtp_password = "123qwEcc";
+        //$smtp_user = "ecccomp.sic@gmail.com";
+        //$smtp_password = "123qwecc";
+        $smtp_user = "mailtesting5432@gmail.com";
+        $smtp_password = "kakihurai";
 
         $mail = new PHPMailer();
         $mail->IsSMTP();
@@ -48,7 +50,7 @@ class ReportController extends AppController
         $mail->Body = $body;
 
         // 宛先
-        $mail->AddAddress($to);
+      $mail->AddAddress(/*$to*/ "mailtesting6543@gmail.com");
 
         if(!$mail->Send()){
             $message  = "Message was not sent<br/ >";
@@ -94,6 +96,10 @@ class ReportController extends AppController
                     $class_list[$g_no][] = $message; //グループ(クラス)ごとにメッセージを分ける
                 }
             }
+        }
+
+        if(count($class_list) === 0){
+          die("新しい遅延情報はありません。");
         }
 
         // 遅延情報メッセージの作成
