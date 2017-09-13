@@ -70,7 +70,8 @@ class ReportController extends AppController
         $json = mb_convert_encoding($json, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
         $arr = json_decode($json, true);
         if ($arr === NULL) {
-            die("JSONのデコードに失敗");
+            print("JSONのデコードに失敗");
+            return;
         }
 
         //学生の名前と、路線名を取得する
@@ -99,7 +100,8 @@ class ReportController extends AppController
         }
 
         if(count($class_list) === 0){
-          die("新しい遅延情報はありません。");
+          print("新しい遅延情報はありません。");
+          return;
         }
 
         // 遅延情報メッセージの作成
@@ -123,7 +125,8 @@ class ReportController extends AppController
       $json = mb_convert_encoding($json, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
       $arr = json_decode($json, true);
       if ($arr === NULL) {
-        die("JSONのデコードに失敗");
+        print("JSONのデコードに失敗");
+        return;
       }
 
       $sql = "UPDATE `route` SET `is_late` = 1 WHERE " ;
