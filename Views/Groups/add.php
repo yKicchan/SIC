@@ -1,13 +1,13 @@
 <script src="/js/add_group.js" charset="utf-8"></script>
 <h2>グループ新規作成</h2>
-<form action="/Members/add" method="post">
+<form action="/groups/add" method="post">
     <div class="form-group">
         <label for="group-name" class="form-required">グループ名</label>
-        <input type="text" class="form-control" id="group-name" name="data[group][name]" placeholder="IE4A" >
+        <input type="text" class="form-control" id="group-name" name="data[group][name]" placeholder="IE4A" required>
     </div>
     <div class="form-group">
         <label for="owner-name" class="form-required">担当者名</label>
-        <input type="text" class="form-control"　id="owner-name"  name="data[owner][name]" placeholder="ECC 太郎" autocomplete="on" list="owner-names" >
+        <input type="text" class="form-control"　id="owner-name"  name="data[owner][name]" placeholder="ECC 太郎" autocomplete="on" list="owner-names" required>
         <datalist id="owner-names">
             <?php foreach ($data['owners'] as $owner) { ?>
                 <option value="<?= $owner['name'] ?>">
@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
         <label for="owner-mail" class="form-required">担当者メールアドレス</label>
-        <input type="text" class="form-control"　id="owner-mail"  name="data[owner][mail]" placeholder="sic@ecc.ac.jp" autocomplete="on" list="owner-mails" >
+        <input type="text" class="form-control"　id="owner-mail"  name="data[owner][mail]" placeholder="sic@ecc.ac.jp" autocomplete="on" list="owner-mails" required>
         <p class="help-block">このメールアドレス宛に、遅延情報が通知されます。</p>
         <datalist id="owner-mails">
             <?php foreach ($data['owners'] as $owner) { ?>

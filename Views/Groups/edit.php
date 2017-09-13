@@ -66,7 +66,7 @@
     </div>
     <div class="form-group">
         <button type="button" name="del" class="btn btn-danger" onclick="remove()">削除</button>
-        <button type="submit" name="sub" class="btn btn-success right">確定</button>
+        <button type="submit" name="edit" class="btn btn-success right">確定</button>
         <a href="/" class="btn btn-default right">戻る</a>
     </div>
 </form>
