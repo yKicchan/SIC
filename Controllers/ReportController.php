@@ -25,9 +25,9 @@ class ReportController extends AppController
      * @param  string $body 本文
      * @return void
      */
-    private function mailSetting($to, $body)
+    private function mailSetting($to, $title, $body)
     {
-        $subject = "遅延情報のお知らせ";
+        $subject = $title;//"遅延情報のお知らせ";
         $from = "from@from.com";
         $smtp_user = "ecccomp.sic@gmail.com";
         $smtp_password = "123qwEcc";
@@ -49,7 +49,10 @@ class ReportController extends AppController
         $mail->Body = $body;
 
         // 宛先
-      $mail->AddAddress(/*$to*/ "ykicchanapp@gmail.com");
+      $mail->AddAddress(/*$to*/
+        //"ykicchanapp@gmail.com"
+        "mailtesting6543@gmail.com"
+      );
 
         if(!$mail->Send()){
             $message  = "Message was not sent<br/ >";
@@ -59,7 +62,7 @@ class ReportController extends AppController
             $this->setFlag();
         }
 
-        echo $message;
+        //echo $message;
     }
 
     public function sendMailAction()
@@ -103,17 +106,36 @@ class ReportController extends AppController
           return;
         }
 
+        var_dump($class_list);
+
         // 遅延情報メッセージの作成
         foreach ($class_list as $key => $messages) {
+            // $body = "教師番号：{$key}\n";
             $body = "";
             foreach ($messages as $message) {
                 $body .= $message . "\n";
             }
-            $sql  = 'SELECT `name`, `mail` FROM `owners` WHERE owner_id = ' . $key;
+            //$sql  = 'SELECT `o.name` \'name\', `o.mail` \'mail\', `g.name` \'class\' FROM `owners` o, `groups` g WHERE o.owner_id = g.owner_id AND o.owner_id = ' . $key;
+            $sql  = 'SELECT o.name \'name\', o.mail \'mail\', g.name \'class\' FROM owners o, groups g WHERE o.owner_id = g.owner_id AND o.owner_id = ' . $key;
             $row = $model->find($sql);
 
+            $owner = $row[0]['name'];
+            $mail = $row[0]['mail'];
+            $g_name = $row[0]['class'];
+            $more_info = $this->gethostname() ."/host/groups/edit/{$key}";
+
+            $body = <<<EOT
+{$g_name}担任
+{$owner}様
+
+{$body/*遅延情報*/}
+
+会員の詳細・編集は下記リンクをご覧ください
+{$more_info}
+EOT;
             // $this->mailSetting($row[0]['mail'], $body);
-            $this->mailSetting($row[0]['mail'], $body);
+
+            $this->mailSetting($mail,"[{$g_name}]遅延情報のお知らせ", $body);
         }
     }
 
@@ -129,7 +151,7 @@ class ReportController extends AppController
         return;
       }
 
-      $sql = "UPDATE `route` SET `is_late` = 1 WHERE " ;
+      $sql = "UPDATE `routes` SET `is_late` = 1 WHERE " ;
       //$lating_lines = array();
       $is_first = true;
       foreach($arr as $one){
