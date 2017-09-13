@@ -34,7 +34,7 @@
     </div>
     <div class="checkbox">
         <label>
-            <input type="checkbox" name="data[schedule][check]" id="schedule">通知スケジュールを設定する
+            <input type="checkbox" name="data[check]" id="schedule">通知スケジュールを設定する
         </label>
     </div>
     <div class="form-group schedule" hidden="hidden">
@@ -53,13 +53,13 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="time" name="data[schedule][sun]" ></td>
-                    <td><input type="time" name="data[schedule][mon]" ></td>
-                    <td><input type="time" name="data[schedule][tue]" ></td>
-                    <td><input type="time" name="data[schedule][wed]" ></td>
-                    <td><input type="time" name="data[schedule][thu]" ></td>
-                    <td><input type="time" name="data[schedule][fri]" ></td>
-                    <td><input type="time" name="data[schedule][sat]" ></td>
+                    <td><input type="time" name="data[schedule][sun]" value="<?= $data['schedule']['sun'] ?>" ></td>
+                    <td><input type="time" name="data[schedule][mon]" value="<?= $data['schedule']['mon'] ?>" ></td>
+                    <td><input type="time" name="data[schedule][tue]" value="<?= $data['schedule']['tue'] ?>" ></td>
+                    <td><input type="time" name="data[schedule][wed]" value="<?= $data['schedule']['wed'] ?>" ></td>
+                    <td><input type="time" name="data[schedule][thu]" value="<?= $data['schedule']['thu'] ?>" ></td>
+                    <td><input type="time" name="data[schedule][fri]" value="<?= $data['schedule']['fri'] ?>" ></td>
+                    <td><input type="time" name="data[schedule][sat]" value="<?= $data['schedule']['sat'] ?>" ></td>
                 </tr>
             </tbody>
         </table>

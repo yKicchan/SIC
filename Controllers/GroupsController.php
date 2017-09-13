@@ -15,9 +15,17 @@ class GroupsController extends AppController
     public function editAction()
     {
         $group = $this->getGroup();
-        $owners = (new Owners())->get();
+        $model = new Owners();
+        $owners = $model->get();
+        $sql = "SELECT `sun`, `mon`, `tue`, `wed`, `thu`, `fri`, `sat`
+        FROM `schedule`, `groups`
+        WHERE schedule.schedule_id = groups.schedule_id
+        AND `group_id` = {$group['group_id']}";
+        $schedule = $model->find($sql);
+        
         $this->set('group', $group);
         $this->set('owners', $owners);
+        $this->set('schedule', $schedule[0]);
         $this->disp('/Groups/edit.php');
     }
 
@@ -130,6 +138,7 @@ class GroupsController extends AppController
      */
     private function editCommit($data)
     {
+        // グループ更新
         $group = $data['group'];
         $group['id'] = $this->getId();
         $model = new AppModel();
@@ -140,6 +149,7 @@ class GroupsController extends AppController
             echo "グループ失敗";
         }
 
+        // 通知先更新
         $owner = $data['owner'];
         $sql = "SELECT `owner_id` FROM `groups` WHERE `group_id` = {$group['id']}";
         $row = $model->find($sql);
@@ -151,6 +161,28 @@ class GroupsController extends AppController
         $sql = "UPDATE `owners` SET `name` = '{$owner['name']}', `mail` = '{$owner['mail']}' WHERE `owner_id` = {$owner['id']}";
         if (!$model->query($sql)) {
             echo "オーナー失敗";
+        }
+
+        // スケジュール更新
+        if (isset($data['check'])) {
+            $sql = "SELECT `schedule_id` AS id FROM `groups` WHERE `group_id` = {$group['id']}";
+            $schedule = $model->find($sql);
+            foreach ($data['schedule'] as &$time) {
+                if ($time == '') {
+                    $time = '23:59';
+                }
+            }
+            unset($time);
+            $sql = "UPDATE `schedule`
+            SET `sun` = '{$data['schedule']['sun']}',
+            `mon` = '{$data['schedule']['mon']}',
+            `tue` = '{$data['schedule']['tue']}',
+            `wed` = '{$data['schedule']['wed']}',
+            `thu` = '{$data['schedule']['thu']}',
+            `fri` = '{$data['schedule']['fri']}',
+            `sat` = '{$data['schedule']['sat']}'
+            WHERE `schedule_id` = {$schedule[0]['id']}";
+            $model->query($sql);
         }
     }
 
@@ -178,8 +210,34 @@ class GroupsController extends AppController
             // 登録済みの場合はidを取得
             $owner['id'] = $row[0]['owner_id'];
         }
+        // スケジュール登録
+        if (isset($data['check'])) {
+            foreach ($data['schedule'] as &$time) {
+                if ($time == '') {
+                    $time = '23:59';
+                }
+            }
+            unset($time);
+            $sql = "INSERT INTO `schedule` (`sun`, `mon`, `tue`, `wed`, `thu`, `fri`, `sat`) VALUES (
+                '{$data['schedule']['sun']}',
+                '{$data['schedule']['mon']}',
+                '{$data['schedule']['tue']}',
+                '{$data['schedule']['wed']}',
+                '{$data['schedule']['thu']}',
+                '{$data['schedule']['fri']}',
+                '{$data['schedule']['sat']}')";
+        } else {
+            $sql = "INSERT INTO `schedule` (`sun`, `mon`, `tue`, `wed`, `thu`, `fri`, `sat`)
+            VALUES('23:59', '23:59', '23:59', '23:59', '23:59', '23:59', '23:59')";
+        }
+        if ($model->query($sql)) {
+            $schedule_id = $model->getInsertId();
+        } else {
+            return 0;
+        }
+
         // グループ登録
-        $sql = "INSERT INTO `groups`(`name`, `owner_id`) values('{$data['group']['name']}', {$owner['id']})";
+        $sql = "INSERT INTO `groups`(`name`, `owner_id`, `schedule_id`) values('{$data['group']['name']}', {$owner['id']}, {$schedule_id})";
         if (!$model->query($sql)) {
             return 0;
         }
