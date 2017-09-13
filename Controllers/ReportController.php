@@ -27,7 +27,7 @@ class ReportController extends AppController
           '3' => 'wed',
           '4' => 'thu',
           '5' => 'fri',
-          '6' => 'stu',
+          '6' => 'sat',
         );
         $day = $weekdays[date('w')];
 
@@ -64,11 +64,8 @@ class ReportController extends AppController
       }
 
       //同じ時間であれば分を比べる
-      if(intval($arr1[1]) > intval($arr2[1])){
-        return true;
-      }else{
-        return false;
-      }
+      return intval($arr1[1]) > intval($arr2[1]);
+
     }
     /**
      * メール送信
