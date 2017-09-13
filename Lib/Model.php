@@ -170,4 +170,13 @@ abstract class Model
     {
         return $this->mysqli->query($sql);
     }
+
+    /**
+     * 直前のクエリで更新されたAIの値を返す
+     * @return integer AIの値
+     */
+    public function getInsertId()
+    {
+        return $this->mysqli->insert_id;
+    }
 }

@@ -77,6 +77,21 @@ class GroupsController extends AppController
         $this->set('records', $new_arr);
         $this->set('group', $group);
         $this->disp('/Groups/detail.php');
+    }    
+
+    /**
+     * グループ削除
+     * @return void
+     */
+    public function removeAction()
+    {
+        $id = $this->getId();
+        $sql = "DELETE FROM `groups` WHERE `group_id` = $id";
+        if (!(new AppModel)->query($sql)) {
+            echo "削除失敗";
+        } else {
+            header("Location:/");
+        }
     }
 
     /**

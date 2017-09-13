@@ -1,12 +1,63 @@
+/* 右寄せ */
 .right{
     float: right;
+    margin-left: 10px
 }
+
+/* Form */
+.form-required::after{
+    content: "必須";
+    display: inline-block;
+    width: 27px;
+    background-color: #f00;
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    position: relative;
+    top: -2px;
+    margin: 3px;
+    font-weight: lighter;
+}
+.form-optional::after{
+    content: "任意";
+    display: inline-block;
+    width: 27px;
+    background-color: #09f;
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    position: relative;
+    top: -2px;
+    margin: 2px 5px;
+    font-weight: lighter;
+}
+
+/* Table */
 .groups{
     border-top: 2px solid #f90;
 }
 .cell{
     padding: 6px 12px;
 }
-td[colspan="5"]{
+th{
     text-align: center;
+}
+td{
+    text-align: center;
+}
+
+/* 休日の色 */
+.sun{
+    color: #ff2e2e;
+}
+.sat{
+    color: #2e2eff;
+}
+
+/* xButton */
+.btn.del{
+    color: #0085ff;
+    background-color: #fff;
+    font-size: 1.25em
+    padding: 0 7px;
 }

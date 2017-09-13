@@ -2,7 +2,7 @@
 <table class="table table-striped groups">
     <thead>
         <tr>
-            <th>ID</th>
+            <!-- <th>ID</th> -->
             <th>グループ名</th>
             <th>通知先</th>
             <th>アドレス</th>
@@ -13,7 +13,7 @@
         <?php if (count($data['groups']) > 0) { ?>
             <?php foreach ($data['groups'] as $group) { ?>
             <tr>
-                <td><div class="cell"><?= $group['group_id'] ?></div></td>
+                <!-- <td><div class="cell"><?= $group['group_id'] ?></div></td> -->
                 <td><a href="/groups/detail/<?= $group['group_id'] ?>" class="btn btn-link"><?= $group['group_name'] ?></a></td>
                 <td><div class="cell"><?= $group['owner_name'] ?></td>
                 <td><div class="cell"><?= $group['mail'] ?></td>

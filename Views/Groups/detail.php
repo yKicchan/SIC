@@ -1,4 +1,4 @@
-<h2><?= $data['group']['group_name'] ?><a href="" class="btn right btn-success">メンバー追加</a></h2>
+<h2><?= $data['group']['group_name'] ?>のメンバー一覧<a href="" class="btn right btn-success">メンバー追加</a></h2>
 <table class="table table-striped groups">
   <thead>
       <tr>
