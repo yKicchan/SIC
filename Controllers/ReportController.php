@@ -1,4 +1,6 @@
 <?php
+// ライブラリの読み込み
+require_once '../Other/PHPMailer/PHPMailerAutoload.php';
 class ReportController extends AppController
 {
     /**
@@ -8,8 +10,7 @@ class ReportController extends AppController
     private $url;
 
     /**
-     * コンストラクタ
-     * APIのURLを初期化
+     * APIのURLを初期化、ライブラリの読み込み
      */
     public function __construct()
     {
