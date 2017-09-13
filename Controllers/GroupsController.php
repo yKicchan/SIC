@@ -47,10 +47,34 @@ class GroupsController extends AppController
         $group = $this->getGroup();
         $model =new AppModel();
         $key = $group["group_id"];
-        $sql  = 'SELECT m.member_id AS \'member_id\', m.name AS \'name\', r.name AS \'line\', m.mail AS \'mail\' FROM members m, member_route mr, routes r WHERE m.member_id = mr.member_id AND mr.route_id = r.route_id AND m.group_id = ' . $key;
-        $row = $model->find($sql);
+        $sql  = 'SELECT m.member_id AS \'member_id\', m.name AS \'name\', r.name AS \'line\', m.mail AS \'mail\'
+        FROM members m, member_route mr, routes r
+        WHERE m.member_id = mr.member_id AND mr.route_id = r.route_id AND m.group_id = ' . $key .
+        ' ORDER BY member_id';
 
-        $this->set('records', $row);
+        $records = $model->find($sql);
+        $new_arr = array(); //乗り換えする人の路線をまとめる配列
+
+        for($i=0; $i<count($records);$i++){
+          $tmp_id = $records[$i]['member_id'];
+          $tmp_cnt = $i; //調べようとする時点の$iを保管
+          $lines = array();//
+          $lines[] = $records[$i]['line'];
+          //同じ学籍番号であれば路線名を配列にまとめる
+          while(isset($records[$i+1]) && $tmp_id == $records[$i+1]['member_id']){
+            $lines[] = $records[$i+1]['line'];
+            $i++;
+          }
+          if(count($lines) >= 2){
+            //元の配列の一行を流用して新しい配列に格納する
+            $records[$tmp_cnt]['line'] =implode(",", $lines);
+            $new_arr[] = $records[$tmp_cnt];
+          }else{
+            $new_arr[] = $records[$i];
+          }
+        }
+
+        $this->set('records', $new_arr);
         $this->set('group', $group);
         $this->disp('/Groups/detail.php');
     }

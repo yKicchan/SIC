@@ -14,7 +14,6 @@
 <?php if (count($data['records']) > 0) { ?>
   <?php foreach ($data['records'] as $row) { ?>
     <tr>
-      <!--  'member_id', m.name AS 'name', mr.name AS 'line', m.mail AS 'mail'  -->
       <td><?=$row['member_id']?></td>
       <td><?=$row['name']?></td>
       <td><?=$row['line']?></td>
