@@ -22,7 +22,7 @@ class GroupsController extends AppController
         WHERE schedule.schedule_id = groups.schedule_id
         AND `group_id` = {$group['group_id']}";
         $schedule = $model->find($sql);
-        
+
         $this->set('group', $group);
         $this->set('owners', $owners);
         $this->set('schedule', $schedule[0]);
@@ -64,6 +64,7 @@ class GroupsController extends AppController
         // メンバー設定されてきたか
         if (isset($post['sub'])) {
             $this->memberAdd($post['data']);
+            $this->set('isUpdate', true);
         }
 
         $group = $this->getGroup();
@@ -251,6 +252,7 @@ class GroupsController extends AppController
      */
     private function memberAdd($data)
     {
+        // グループのメンバー情報を一旦初期化
         $group_id = $this->getId();
         $model = new AppModel();
         $sql = "DELETE FROM `members` WHERE `group_id` = $group_id";
@@ -258,6 +260,7 @@ class GroupsController extends AppController
         if (count($data) == 0) {
             return;
         }
+        // ルートの名前からIDを取得
         $sql = "SELECT `route_id`, `name` FROM `routes`";
         $routes = $model->find($sql);
         foreach ($data['route'] as &$value) {
@@ -273,7 +276,13 @@ class GroupsController extends AppController
             unset($val);
         }
         unset($value);
+
+        // メンバー登録
         for ($i = 0; $i < count($data['id']); $i++) {
+            // 空の値はスキップ
+            if ($data['id'][$i] == "" || $data['name'][$i] == "") {
+                continue;
+            }
             $sql = "INSERT INTO `members` values({$data['id'][$i]}, '{$data['name'][$i]}', {$group_id}, null)";
             $result = $model->query($sql);
             foreach ($data['route'][$i] as $route) {

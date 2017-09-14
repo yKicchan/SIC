@@ -1,5 +1,10 @@
 <script src="/js/edit_member.js" charset="utf-8"></script>
 <h2><?= $data['group']['group_name'] ?>のメンバー一覧<button class="btn btn-default right" data-toggle="modal" data-target="#modal">メンバー追加</button></h2>
+<?php if ($data['isUpdate']) { ?>
+    <div class="alert alert-success" role="alert">
+        更新されました
+    </div>
+<?php } ?>
 <form action="/groups/detail/<?= $data['group']['group_id'] ?>" method="post">
     <!-- メンバーデータ一覧   -->
     <table class="table groups">
