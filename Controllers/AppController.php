@@ -37,7 +37,7 @@ class AppController extends Controller
      * メール送信
      * @param  string $to 送信先 string
      * @param  string $body 本文
-     * @return void
+     * @return boolean 送信結果
      */
     protected function mailSetting($to, $title, $body)
     {
@@ -63,16 +63,9 @@ class AppController extends Controller
         $mail->Body = $body;
 
         // 宛先
-      $mail->AddAddress($to);
+        $mail->AddAddress($to);
 
-        if(!$mail->Send()){
-            $message  = "Message was not sent<br/ >";
-            $message .= "Mailer Error: " . $mailer->ErrorInfo;
-        } else {
-            $message  = "Message has been sent";
-        }
-
-        //echo $message;
+        return $mail->Send();
     }
 
     /**

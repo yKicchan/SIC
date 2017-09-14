@@ -18,8 +18,10 @@
     <div class="form-group">
         <label for="owner-mail" class="form-required">通知先メールアドレス</label>
         <input type="text" class="form-control" id="owner-mail" name="data[owner][mail]" placeholder="sic@ecc.ac.jp" autocomplete="on" list="owner-mails" required>
-        <p class="help-block">このメールアドレス宛に、遅延情報が通知されます。</p>
-        <a class="btn btn-default btn-xs" id='test'>テスト送信</a>
+        <p class="help-block">
+            このメールアドレス宛に、遅延情報が通知されます。
+            <span class="btn btn-default btn-xs" id="mail-test">テスト送信</span>
+        </p>
         <datalist id="owner-mails">
             <?php foreach ($data['owners'] as $owner) { ?>
                 <option value="<?= $owner['mail'] ?>">

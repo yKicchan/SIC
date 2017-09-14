@@ -1,4 +1,5 @@
 <script src="/js/add_group.js" charset="utf-8"></script>
+<script src="/js/confirm_mail.js" charset="utf-8"></script>
 <h2>グループを編集</h2>
 <form action="/" method="post">
     <input type="hidden" name="data[group_id]" value="<?= $data['group']['group_id'] ?>">
@@ -8,7 +9,7 @@
     </div>
     <div class="form-group">
         <label for="owner-name">通知先名</label>
-        <input type="text" class="form-control"　id="owner-name"  name="data[owner][name]" value="<?= $data['group']['owner_name'] ?>" autocomplete="on" list="owner-names" >
+        <input type="text" class="form-control" id="owner-name" name="data[owner][name]" value="<?= $data['group']['owner_name'] ?>" autocomplete="on" list="owner-names" >
         <datalist id="owner-names">
             <?php foreach ($data['owners'] as $owner) { ?>
                 <option value="<?= $owner['name'] ?>">
@@ -17,8 +18,11 @@
     </div>
     <div class="form-group">
         <label for="owner-mail">通知先メールアドレス</label>
-        <input type="text" class="form-control"　id="owner-mail"  name="data[owner][mail]" value="<?= $data['group']['mail'] ?>" autocomplete="on" list="owner-mails" >
-        <p class="help-block">このメールアドレス宛に、遅延情報が通知されます。</p>
+        <input type="text" class="form-control" id="owner-mail" name="data[owner][mail]" value="<?= $data['group']['mail'] ?>" autocomplete="on" list="owner-mails" >
+        <p class="help-block">
+            このメールアドレス宛に、遅延情報が通知されます。
+            <span class="btn btn-default btn-xs" id="mail-test">テスト送信</span>
+        </p>
         <datalist id="owner-mails">
             <?php foreach ($data['owners'] as $owner) { ?>
                 <option value="<?= $owner['mail'] ?>">
