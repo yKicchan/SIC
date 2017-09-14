@@ -1,14 +1,7 @@
-<script type="text/javascript">
-    var group_id = <?= $data['group']['group_id'] ?>;
-    var remove = function(){
-        if (confirm("削除しますか？")) {
-            location.href = "/groups/remove/" + group_id;
-        }
-    }
-</script>
 <script src="/js/add_group.js" charset="utf-8"></script>
 <h2>グループを編集</h2>
-<form action="/groups/detail/<?= $data['group']['group_id'] ?>" method="post">
+<form action="/" method="post">
+    <input type="hidden" name="data[group_id]" value="<?= $data['group']['group_id'] ?>">
     <div class="form-group">
         <label for="group-name">グループ名</label>
         <input type="text" class="form-control" id="group-name" name="data[group][name]" value="<?= $data['group']['group_name'] ?>" >
@@ -65,8 +58,32 @@
         </table>
     </div>
     <div class="form-group">
-        <button type="button" name="del" class="btn btn-danger" onclick="remove()">削除</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal">削除</button>
         <button type="submit" name="edit" class="btn btn-success right">確定</button>
         <a href="/" class="btn btn-default right">戻る</a>
     </div>
 </form>
+<!-- モーダルウィンドウ表示項目  -->
+<div class="modal fade" id="modal">
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">グループを削除</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    グループを削除しますか？<br>
+                    一度削除すると、元に戻すことはできません。
+                </p>
+            </div>
+            <div class="modal-footer">
+                <form action="/" method="post">
+                    <input type="hidden" name="data[group_id]" value="<?= $data['group']['group_id'] ?>">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+                    <button type="submit" name="remove" class="btn btn-danger">削除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

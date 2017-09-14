@@ -1,4 +1,14 @@
 <h2>グループ一覧<a href="/groups/add" class="btn btn-link right">+新規作成</a></h2>
+<?php if ($data['isEdit']) { ?>
+    <div class="alert alert-success" role="alert">
+        更新されました
+    </div>
+<?php } ?>
+<?php if ($data['isRemove']) { ?>
+    <div class="alert alert-danger" role="alert">
+        削除されました
+    </div>
+<?php } ?>
 <table class="table table-striped groups">
     <thead>
         <tr>

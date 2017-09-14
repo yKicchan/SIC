@@ -53,15 +53,8 @@ class GroupsController extends AppController
      */
     public function detailAction()
     {
-        // 編集してきたかの判定
-        $post = $this->getPost();
-        if (isset($post['edit'])) {
-            $this->editCommit($post['data']);
-            header("Location:/");
-            return;
-        }
-
         // メンバー設定されてきたか
+        $post = $this->getPost();
         if (isset($post['sub'])) {
             $this->memberAdd($post['data']);
             $this->set('isUpdate', true);
@@ -107,21 +100,6 @@ class GroupsController extends AppController
     }
 
     /**
-     * グループ削除
-     * @return void
-     */
-    public function removeAction()
-    {
-        $id = $this->getId();
-        $sql = "DELETE FROM `groups` WHERE `group_id` = $id";
-        if (!(new AppModel)->query($sql)) {
-            echo "削除失敗";
-        } else {
-            header("Location:/");
-        }
-    }
-
-    /**
      * グループ情報を取得する
      * @return array グループ情報
      */
@@ -130,61 +108,6 @@ class GroupsController extends AppController
         $id = $this->getId();
         $model = new Groups();
         return $model->get($id);
-    }
-
-    /**
-     * 編集内容を確定する
-     * @param  array $data POSTデータ
-     * @return void
-     */
-    private function editCommit($data)
-    {
-        // グループ更新
-        $group = $data['group'];
-        $group['id'] = $this->getId();
-        $model = new AppModel();
-        $group['name'] = $model->escape($group['name']);
-
-        $sql = "UPDATE `groups` SET `name` = '{$group['name']}' WHERE `group_id` = {$group['id']}";
-        if (!$model->query($sql)) {
-            echo "グループ失敗";
-        }
-
-        // 通知先更新
-        $owner = $data['owner'];
-        $sql = "SELECT `owner_id` FROM `groups` WHERE `group_id` = {$group['id']}";
-        $row = $model->find($sql);
-        $owner['id'] = $row[0]['owner_id'];
-
-        $owner['name'] = $model->escape($owner['name']);
-        $owner['mail'] = $model->escape($owner['mail']);
-
-        $sql = "UPDATE `owners` SET `name` = '{$owner['name']}', `mail` = '{$owner['mail']}' WHERE `owner_id` = {$owner['id']}";
-        if (!$model->query($sql)) {
-            echo "オーナー失敗";
-        }
-
-        // スケジュール更新
-        if (isset($data['check'])) {
-            $sql = "SELECT `schedule_id` AS id FROM `groups` WHERE `group_id` = {$group['id']}";
-            $schedule = $model->find($sql);
-            foreach ($data['schedule'] as &$time) {
-                if ($time == '') {
-                    $time = '23:59';
-                }
-            }
-            unset($time);
-            $sql = "UPDATE `schedule`
-            SET `sun` = '{$data['schedule']['sun']}',
-            `mon` = '{$data['schedule']['mon']}',
-            `tue` = '{$data['schedule']['tue']}',
-            `wed` = '{$data['schedule']['wed']}',
-            `thu` = '{$data['schedule']['thu']}',
-            `fri` = '{$data['schedule']['fri']}',
-            `sat` = '{$data['schedule']['sat']}'
-            WHERE `schedule_id` = {$schedule[0]['id']}";
-            $model->query($sql);
-        }
     }
 
     /**
