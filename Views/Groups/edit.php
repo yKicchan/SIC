@@ -14,7 +14,7 @@
         <input type="text" class="form-control" id="group-name" name="data[group][name]" value="<?= $data['group']['group_name'] ?>" >
     </div>
     <div class="form-group">
-        <label for="owner-name">担当者名</label>
+        <label for="owner-name">通知先名</label>
         <input type="text" class="form-control"　id="owner-name"  name="data[owner][name]" value="<?= $data['group']['owner_name'] ?>" autocomplete="on" list="owner-names" >
         <datalist id="owner-names">
             <?php foreach ($data['owners'] as $owner) { ?>
@@ -23,7 +23,7 @@
         </datalist>
     </div>
     <div class="form-group">
-        <label for="owner-mail">担当者メールアドレス</label>
+        <label for="owner-mail">通知先メールアドレス</label>
         <input type="text" class="form-control"　id="owner-mail"  name="data[owner][mail]" value="<?= $data['group']['mail'] ?>" autocomplete="on" list="owner-mails" >
         <p class="help-block">このメールアドレス宛に、遅延情報が通知されます。</p>
         <datalist id="owner-mails">

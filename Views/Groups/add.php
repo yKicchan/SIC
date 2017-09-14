@@ -6,7 +6,7 @@
         <input type="text" class="form-control" id="group-name" name="data[group][name]" placeholder="IE4A" required>
     </div>
     <div class="form-group">
-        <label for="owner-name" class="form-required">担当者名</label>
+        <label for="owner-name" class="form-required">通知先名</label>
         <input type="text" class="form-control"　id="owner-name"  name="data[owner][name]" placeholder="ECC 太郎" autocomplete="on" list="owner-names" required>
         <datalist id="owner-names">
             <?php foreach ($data['owners'] as $owner) { ?>
@@ -15,7 +15,7 @@
         </datalist>
     </div>
     <div class="form-group">
-        <label for="owner-mail" class="form-required">担当者メールアドレス</label>
+        <label for="owner-mail" class="form-required">通知先メールアドレス</label>
         <input type="text" class="form-control"　id="owner-mail"  name="data[owner][mail]" placeholder="sic@ecc.ac.jp" autocomplete="on" list="owner-mails" required>
         <p class="help-block">このメールアドレス宛に、遅延情報が通知されます。</p>
         <datalist id="owner-mails">
