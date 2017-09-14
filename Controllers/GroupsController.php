@@ -41,10 +41,14 @@ class GroupsController extends AppController
       if(!$this->isAjax()){
         return;
       }
-      //$_GET[]
       $post = $this->getPost();
-      var_dump($post);
-      $this->mailSetting($post['mail'], "テスト", "テスト");
+
+      $title = "テスト送信";
+      $body = <<<EOT
+メールをテスト送信しています。
+このメールアドレス宛に遅延情報を送信します。
+EOT;
+      $this->mailSetting($post['mail'], $title, $body);
     }
 
     /**
