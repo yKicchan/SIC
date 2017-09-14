@@ -1,7 +1,13 @@
+.top-list{
+    margin: 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
 /* 右寄せ */
 .right{
-    float: right;
-    margin-left: 10px
+    float: right !important;
+    margin-left: 10px !important;
 }
 
 /* Form */

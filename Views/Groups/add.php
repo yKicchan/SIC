@@ -1,5 +1,6 @@
 <script src="/js/add_group.js" charset="utf-8"></script>
 <script src="/js/confirm_mail.js" charset="utf-8"></script>
+<p class="top-list"><a href="/">Top</a> > グループ新規作成</p>
 <h2>グループ新規作成</h2>
 <form action="/groups/add" method="post">
     <div class="form-group">
