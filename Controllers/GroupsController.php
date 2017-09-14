@@ -30,6 +30,24 @@ class GroupsController extends AppController
     }
 
     /**
+     * Ajaxによる通信かどうかを判定
+     *
+     * @return boolean True or False
+     */
+    public function isAjax() { return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'; }
+
+    public function ajax_confirm_mailAction()
+    {
+      if(!$this->isAjax()){
+        return;
+      }
+      //$_GET[]
+      $post = $this->getPost();
+      var_dump($post);
+      $this->mailSetting($post['mail'], "テスト", "テスト");
+    }
+
+    /**
      * グループ追加画面
      * @return void
      */
