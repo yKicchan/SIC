@@ -34,7 +34,9 @@
 
 /* Table */
 .groups{
+    border: 1px solid #ccc;
     border-top: 2px solid #f90;
+
 }
 .cell{
     padding: 6px 12px;
