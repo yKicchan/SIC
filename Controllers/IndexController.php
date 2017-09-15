@@ -93,12 +93,16 @@ class IndexController extends AppController
 
     /**
      * グループ削除
+     * @param integer $id グループID
      * @return void
      */
     private function groupRemove($id)
     {
+        $model = new AppModel();
+        $sql = "DELETE FROM `members` WHERE `group_id` = $id";
+        $model->query($sql);
         $sql = "DELETE FROM `groups` WHERE `group_id` = $id";
-        if (!(new AppModel)->query($sql)) {
+        if (!$model->query($sql)) {
             echo "削除失敗";
         } else {
             $this->set('isRemove', true);
