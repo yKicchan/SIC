@@ -14,6 +14,7 @@ class GroupsController extends AppController
      */
     public function editAction()
     {
+        // グループ情報を取得
         $group = $this->getGroup();
         $model = new Owners();
         $owners = $model->get();
@@ -23,9 +24,16 @@ class GroupsController extends AppController
         AND `group_id` = {$group['group_id']}";
         $schedule = $model->find($sql);
 
+        // パンくずリストを生成
+        $breadcrumb = array('end' => 'グループを編集');
+
+        // Viewと共有するデータをセット
         $this->set('group', $group);
         $this->set('owners', $owners);
         $this->set('schedule', $schedule[0]);
+        $this->set('breadcrumb', $breadcrumb);
+
+        // 表示
         $this->disp('/Groups/edit.php');
     }
 
@@ -57,15 +65,25 @@ EOT;
      */
     public function addAction()
     {
+        // グループを追加確定してきたか
         $post = $this->getPost();
-        $group_id = 0;
         if (isset($post['sub'])) {
             $group_id = $this->groupAdd($post['data']);
             header("Location:/groups/detail/$group_id");
             return;
         }
+
+        // 新規追加のときすでにある通知先の情報を取得
         $owners = (new Owners())->get();
+
+        // パンくずリスト生成
+        $breadcrumb = array('end' => 'グループ新規作成');
+
+        // Viewと共有するデータをセット
         $this->set('owners', $owners);
+        $this->set('breadcrumb', $breadcrumb);
+
+        // 表示
         $this->disp('/Groups/add.php');
     }
 
@@ -82,6 +100,7 @@ EOT;
             $this->set('isUpdate', true);
         }
 
+        // グループの詳細情報を取得
         $group = $this->getGroup();
         $model =new AppModel();
         $key = $group["group_id"];
@@ -93,31 +112,39 @@ EOT;
         $records = $model->find($sql);
         $new_arr = array(); //乗り換えする人の路線をまとめる配列
 
-        for($i=0; $i<count($records);$i++){
+        for ($i=0; $i<count($records);$i++) {
           $tmp_id = $records[$i]['member_id'];
           $tmp_cnt = $i; //調べようとする時点の$iを保管
           $lines = array();//
           $lines[] = $records[$i]['line'];
           //同じ学籍番号であれば路線名を配列にまとめる
-          while(isset($records[$i+1]) && $tmp_id == $records[$i+1]['member_id']){
+          while (isset($records[$i+1]) && $tmp_id == $records[$i+1]['member_id']) {
             $lines[] = $records[$i+1]['line'];
             $i++;
           }
-          if(count($lines) >= 2){
+          if (count($lines) >= 2) {
             //元の配列の一行を流用して新しい配列に格納する
             $records[$tmp_cnt]['line'] =implode(",", $lines);
             $new_arr[] = $records[$tmp_cnt];
-          }else{
+          } else {
             $new_arr[] = $records[$i];
           }
         }
 
+        // 路線情報を取得
         $sql = "SELECT `name` FROM `routes`";
         $routes = $model->find($sql);
 
+        // パンくずリスト生成
+        $breadcrumb = array('end' => 'メンバー一覧');
+
+        // Viewと共有するデータをセット
         $this->set('records', $new_arr);
         $this->set('group', $group);
         $this->set('routes', $routes);
+        $this->set('breadcrumb', $breadcrumb);
+
+        // 表示
         $this->disp('/Groups/detail.php');
     }
 

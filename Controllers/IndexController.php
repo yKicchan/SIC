@@ -31,6 +31,9 @@ class IndexController extends AppController
         $groups = $model->get();
         $this->set('groups', $groups);
 
+        // index(Home)ではパンくずリストを表示しない
+        $this->set('isHome', true);
+
         // ダッシュボード表示
         $this->disp('/index.php');
     }

@@ -1,5 +1,4 @@
 <script src="/js/edit_member.js" charset="utf-8"></script>
-<p class="top-list"><a href="/">Top</a> > <?= $data['group']['group_name'] ?></p>
 <h2><?= $data['group']['group_name'] ?>のメンバー一覧<button class="btn btn-default right" data-toggle="modal" data-target="#modal">メンバー追加</button></h2>
 <?php if ($data['isUpdate']) { ?>
     <div class="alert alert-success" role="alert">

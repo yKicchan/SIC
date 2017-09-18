@@ -7,7 +7,23 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="/css/master.css">
         <title><?= $data['title'] ?></title>
     </head>
-    <body class="container">
+    <body>
+        <?php if (!isset($data['isHome'])) { ?>
+            <header>
+                <ul class="container-fluid" id="breadcrumb" title="home">
+                    <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                    <?php foreach ($data['breadcrumb'] as $key => $val) { ?>
+                        <?php if ($key != "end") { ?>
+                            <li><a href="<?= $key ?>"><?= $val ?></a></li>
+                        <?php } else { ?>
+                            <li><?= $val ?></li>
+                        <?php } ?>
+                    <?php } ?>
+                </ul>
+            </header>
+        <?php } ?>
+        <div class="container">

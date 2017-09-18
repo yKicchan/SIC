@@ -1,7 +1,23 @@
-.top-list{
-    margin: 10px 0;
+.home{
+    margin-right: 6px;
+    font-size: 1.1em;
+}
+
+/* パンくずリスト */
+#breadcrumb{
+    margin-top: 10px;
     padding-bottom: 5px;
     border-bottom: 1px solid #e8e8e8;
+    list-style: none;
+}
+#breadcrumb>li{
+    display: inline-block;
+    padding-right: 6px
+}
+#breadcrumb>li+li::before{
+    content: ">";
+    padding-bottom: 1px;
+    padding-right: 8px;
 }
 
 /* 右寄せ */
