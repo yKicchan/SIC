@@ -8,7 +8,7 @@
 <?php } ?>
 <form action="/groups/detail/<?= $data['group']['group_id'] ?>" method="post">
     <!-- メンバーデータ一覧   -->
-    <table class="table groups">
+    <table class="table table-striped groups">
         <thead>
             <tr>
                 <th>ID</th>
