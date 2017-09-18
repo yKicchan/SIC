@@ -14,7 +14,17 @@
     <body>
         <?php if (!isset($data['isHome'])) { ?>
             <header>
-                <ul class="container-fluid" id="breadcrumb" title="home">
+                <ul class="container-fluid breadcrumb">
+                    <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                    <?php foreach ($data['breadcrumb'] as $key => $val) { ?>
+                        <?php if ($key != "end") { ?>
+                            <li><a href="<?= $key ?>"><?= $val ?></a></li>
+                        <?php } else { ?>
+                            <li><?= $val ?></li>
+                        <?php } ?>
+                    <?php } ?>
+                </ul>
+                <ul class="container-fluid breadcrumb" id="breadcrumb">
                     <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
                     <?php foreach ($data['breadcrumb'] as $key => $val) { ?>
                         <?php if ($key != "end") { ?>
@@ -26,4 +36,24 @@
                 </ul>
             </header>
         <?php } ?>
+        <script type="text/javascript">
+        $(function(){
+            var breadcrumb = $(".breadcrumb");
+            var height = breadcrumb.height();
+            var isOpened = false;
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > height + 25) {
+                    if (~isOpened) {
+                        $("#breadcrumb").slideDown('fast');
+                        isOpened = true;
+                    }
+                } else {
+                    if (isOpened) {
+                        $("#breadcrumb").slideUp('fast');
+                        isOpened = false;
+                    }
+                }
+            });
+        });
+        </script>
         <div class="container">
