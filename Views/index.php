@@ -27,7 +27,7 @@
                 <td><a href="/groups/detail/<?= $group['group_id'] ?>" class="btn btn-link"><?= $group['group_name'] ?></a></td>
                 <td><div class="cell"><?= $group['owner_name'] ?></td>
                 <td><div class="cell"><?= $group['mail'] ?></td>
-                <td><a class="btn btn-default btn-sm" href="/groups/edit/<?= $group['group_id'] ?>">編集</a></td>
+                <td class="btn-edit-col"><a class="btn btn-default btn-sm" href="/groups/edit/<?= $group['group_id'] ?>">編集</a></td>
             </tr>
             <?php } ?>
         <?php } else { ?>

@@ -51,8 +51,15 @@ th{
     text-align: center;
 }
 td{
-    text-align: center;
     vertical-align: middle !important;
+    padding: 8px 18px !important;
+}
+th, td{
+    border-right: 1px dotted #dfdfdf;
+}
+.btn-edit-col{
+    text-align: center;
+    width: 83px;
 }
 
 /* 休日の色 */
