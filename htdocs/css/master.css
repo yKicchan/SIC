@@ -20,9 +20,9 @@
     text-align: center;
     font-size: 10px;
     position: relative;
-    top: -2px;
+    top: -1px;
     margin: 3px;
-    font-weight: lighter;
+    font-weight: normal;
 }
 .form-optional::after{
     content: "任意";
@@ -33,9 +33,9 @@
     text-align: center;
     font-size: 10px;
     position: relative;
-    top: -2px;
+    top: -1px;
     margin: 2px 5px;
-    font-weight: lighter;
+    font-weight: normal;
 }
 
 /* Table */
