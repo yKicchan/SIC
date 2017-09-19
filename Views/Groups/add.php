@@ -3,11 +3,11 @@
 <h2 class="form-title">グループ新規作成</h2>
 <form action="/groups/add" method="post">
     <div class="form-group">
-        <label for="group-name" class="form-required">グループ名</label>
+        <label for="group-name">グループ名</label><span class="form-required">必須</span>
         <input type="text" class="form-control" id="group-name" name="data[group][name]" placeholder="IE4A" required>
     </div>
     <div class="form-group">
-        <label for="owner-name" class="form-required">通知先名</label>
+        <label for="owner-name">通知先名</label><span class="form-required">必須</span>
         <input type="text" class="form-control"　id="owner-name"  name="data[owner][name]" placeholder="ECC 太郎" autocomplete="on" list="owner-names" required>
         <datalist id="owner-names">
             <?php foreach ($data['owners'] as $owner) { ?>
@@ -16,7 +16,7 @@
         </datalist>
     </div>
     <div class="form-group">
-        <label for="owner-mail" class="form-required">通知先メールアドレス</label>
+        <label for="owner-mail">通知先メールアドレス</label><span class="form-required">必須</span>
         <input type="text" class="form-control" id="owner-mail" name="data[owner][mail]" placeholder="sic@ecc.ac.jp" autocomplete="on" list="owner-mails" required>
         <p class="help-block">
             このメールアドレス宛に、遅延情報が通知されます。
@@ -29,9 +29,10 @@
         </datalist>
     </div>
     <div class="checkbox">
-        <label class="form-optional">
+        <label>
             <input type="checkbox" name="data[check]" id="schedule">通知スケジュールを設定する
         </label>
+        <span class="form-optional">任意</span>
         <div class="schedule">
             <table class="table table-bordered">
                 <thead>
@@ -60,8 +61,8 @@
         </div>
         <p class="help-block">※設定した時間以降は、遅延情報が通知されなくなります。</p>
     </div>
-    <div class="form-group right">
-        <a href="/" class="btn btn-default">戻る</a>
-        <button type="submit" name="sub" class="btn btn-success">完了</button>
+    <div class="form-group">
+        <button type="submit" name="sub" class="btn btn-success right">完了</button>
+        <a href="/" class="btn btn-default right">戻る</a>
     </div>
 </form>

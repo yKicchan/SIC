@@ -42,8 +42,7 @@ header{
 }
 
 /* Form */
-.form-required::after{
-    content: "必須";
+.form-required{
     display: inline-block;
     width: 27px;
     background-color: #f00;
@@ -55,8 +54,7 @@ header{
     margin: 3px;
     font-weight: normal;
 }
-.form-optional::after{
-    content: "任意";
+.form-optional{
     display: inline-block;
     width: 27px;
     background-color: #09f;
