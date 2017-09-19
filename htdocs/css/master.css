@@ -2,6 +2,12 @@
     margin-right: 6px;
     font-size: 1.1em;
 }
+.form-title{
+    margin-bottom: 22px;
+}
+h2 a.btn.btn-link{
+    margin-top: 8px;
+}
 
 /* パンくずリスト */
 header{

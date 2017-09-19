@@ -1,4 +1,7 @@
-<h2><i class="fa fa-home home" aria-hidden="true"></i>グループ一覧<a href="/groups/add" class="btn btn-link right">+新規作成</a></h2>
+<h2>
+    <i class="fa fa-home home" aria-hidden="true"></i>グループ一覧
+    <a href="/groups/add" class="btn btn-link right">+新規作成</a>
+</h2>
 <?php if ($data['isEdit']) { ?>
     <div class="alert alert-success" role="alert">
         更新されました
