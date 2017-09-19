@@ -15,7 +15,7 @@
         <?php if (!isset($data['isHome'])) { ?>
             <header>
                 <ul class="container-fluid breadcrumb">
-                    <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                    <li><a href="/"><i class="fa fa-home home" aria-hidden="true"></i></a></li>
                     <?php foreach ($data['breadcrumb'] as $key => $val) { ?>
                         <?php if ($key != "end") { ?>
                             <li><a href="<?= $key ?>"><?= $val ?></a></li>
