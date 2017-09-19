@@ -108,3 +108,12 @@ th, td{
     font-size: 1.25em
     padding: 0 7px;
 }
+
+/* スケジュール表 */
+.schedule{
+    display: none;
+}
+.schedule table{
+    margin-top: 5px;
+    margin-bottom: 0;
+}

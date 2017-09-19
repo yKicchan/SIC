@@ -32,33 +32,33 @@
         <label class="form-optional">
             <input type="checkbox" name="data[check]" id="schedule">通知スケジュールを設定する
         </label>
-    </div>
-    <div class="form-group schedule" hidden="hidden">
+        <div class="schedule">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="sun">日</th>
+                        <th>月</th>
+                        <th>火</th>
+                        <th>水</th>
+                        <th>木</th>
+                        <th>金</th>
+                        <th class="sat">土</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="time" name="data[schedule][sun]" ></td>
+                        <td><input type="time" name="data[schedule][mon]" ></td>
+                        <td><input type="time" name="data[schedule][tue]" ></td>
+                        <td><input type="time" name="data[schedule][wed]" ></td>
+                        <td><input type="time" name="data[schedule][thu]" ></td>
+                        <td><input type="time" name="data[schedule][fri]" ></td>
+                        <td><input type="time" name="data[schedule][sat]" ></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <p class="help-block">※設定した時間以降は、遅延情報が通知されなくなります。</p>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th class="sun">日</th>
-                    <th>月</th>
-                    <th>火</th>
-                    <th>水</th>
-                    <th>木</th>
-                    <th>金</th>
-                    <th class="sat">土</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="time" name="data[schedule][sun]" ></td>
-                    <td><input type="time" name="data[schedule][mon]" ></td>
-                    <td><input type="time" name="data[schedule][tue]" ></td>
-                    <td><input type="time" name="data[schedule][wed]" ></td>
-                    <td><input type="time" name="data[schedule][thu]" ></td>
-                    <td><input type="time" name="data[schedule][fri]" ></td>
-                    <td><input type="time" name="data[schedule][sat]" ></td>
-                </tr>
-            </tbody>
-        </table>
     </div>
     <div class="form-group right">
         <a href="/" class="btn btn-default">戻る</a>

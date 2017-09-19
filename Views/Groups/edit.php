@@ -33,9 +33,7 @@
         <label>
             <input type="checkbox" name="data[check]" id="schedule">通知スケジュールを設定する
         </label>
-    </div>
-    <div class="form-group schedule" hidden="hidden">
-        <p class="help-block">※設定した時間以降は、遅延情報が通知されなくなります。</p>
+    <div class="schedule">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -61,6 +59,8 @@
             </tbody>
         </table>
     </div>
+    <p class="help-block">※設定した時間以降は、遅延情報が通知されなくなります。</p>
+</div>
     <div class="form-group">
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal">削除</button>
         <button type="submit" name="edit" class="btn btn-success right">確定</button>
