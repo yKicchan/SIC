@@ -42,12 +42,12 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="nam">ID</label>
-                    <input type="number" class="form-control" size="20" id="num">
+                    <label for="nam">メンバーID</label>
+                    <input type="number" class="form-control" size="20" id="num" placeholder="社員No、学籍番号など">
                 </div>
                 <div class="form-group">
                     <label for="nam">メンバー名</label>
-                    <input type="text" class="form-control" size="20" id="nam">
+                    <input type="text" class="form-control" size="20" id="nam" placeholder="メンバーの名前を入力">
                 </div>
                 <div class="form-group">
                     <label for="nam">経路</label>
