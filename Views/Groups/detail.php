@@ -52,7 +52,6 @@
                 <div class="form-group">
                     <label for="nam">経路</label>
                     <select class="routes" style="width: 100%" id="roc">
-                        <option selected disabled></option>
                         <?php foreach ($data['routes'] as $routes) { ?>
                             <option value="<?= $routes['name'] ?>"><?= $routes['name'] ?></option>
                         <?php } ?>

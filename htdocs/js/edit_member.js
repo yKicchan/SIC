@@ -21,6 +21,7 @@ $(function(){
         $('#members').append(row);
         $('#num').val('');
         $('#nam').val('');
+        $('#roc').val(null).trigger('change');
         isChanged = true;
     };
 
@@ -35,8 +36,10 @@ $(function(){
 
     // プラグインの初期化
     $('.routes').select2({
-        width: 'resolve'
+        width: 'resolve',
+        placeholder: '経路を選択'
     });
+    $('#roc').val(null).trigger('change');
 
     // メンバー一行削除
     $(document).on('click', '.del', function(){
