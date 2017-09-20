@@ -1,6 +1,8 @@
 <script src="/js/add_group.js" charset="utf-8"></script>
 <script src="/js/confirm_mail.js" charset="utf-8"></script>
-<h2 class="form-title">グループを編集</h2>
+<div class="row">
+    <h2 class="form-title">グループを編集</h2>
+</div>
 <form action="/" method="post">
     <input type="hidden" name="data[group_id]" value="<?= $data['group']['group_id'] ?>">
     <div class="form-group">

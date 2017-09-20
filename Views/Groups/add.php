@@ -1,6 +1,8 @@
 <script src="/js/add_group.js" charset="utf-8"></script>
 <script src="/js/confirm_mail.js" charset="utf-8"></script>
-<h2 class="form-title">グループ新規作成</h2>
+<div class="row">
+    <h2 class="form-title">グループ新規作成</h2>
+</div>
 <form action="/groups/add" method="post">
     <div class="form-group">
         <label for="group-name">グループ名</label><span class="form-required">必須</span>
