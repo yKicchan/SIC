@@ -34,8 +34,10 @@
             <?php } ?>
         </tbody>
     </table>
-    <button type="submit" name="sub" class="btn btn-success right">確定</button>
-    <a href="/" class="btn btn-default right">戻る</a>
+    <div class="row right">
+        <a href="/" class="btn btn-default">戻る</a>
+        <button type="submit" name="sub" class="btn btn-success">確定</button>
+    </div>
 </form>
 <!-- モーダルウィンドウ表示項目  -->
 <div class="modal fade" id="modal">
