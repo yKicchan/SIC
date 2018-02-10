@@ -16,21 +16,21 @@
             <header>
                 <ul class="container-fluid breadcrumb">
                     <li><a href="/"><i class="fa fa-home home" aria-hidden="true"></i></a></li>
-                    <?php foreach ($data['breadcrumb'] as $key => $val) { ?>
-                        <?php if ($key != "end") { ?>
-                            <li><a href="<?= $key ?>"><?= $val ?></a></li>
+                    <?php foreach ($data['breadcrumb'] as $value) { ?>
+                        <?php if (isset($value['url'])) { ?>
+                            <li><a href="<?= $value['url'] ?>"><?= $value['str'] ?></a></li>
                         <?php } else { ?>
-                            <li><?= $val ?></li>
+                            <li><?= $value['str'] ?></li>
                         <?php } ?>
                     <?php } ?>
                 </ul>
                 <ul class="container-fluid breadcrumb" id="breadcrumb">
                     <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                    <?php foreach ($data['breadcrumb'] as $key => $val) { ?>
-                        <?php if ($key != "end") { ?>
-                            <li><a href="<?= $key ?>"><?= $val ?></a></li>
+                    <?php foreach ($data['breadcrumb'] as $value) { ?>
+                        <?php if (isset($value['url'])) { ?>
+                            <li><a href="<?= $value['url'] ?>"><?= $value['str'] ?></a></li>
                         <?php } else { ?>
-                            <li><?= $val ?></li>
+                            <li><?= $value['str'] ?></li>
                         <?php } ?>
                     <?php } ?>
                 </ul>

@@ -5,9 +5,19 @@
         <button class="btn btn-default right" data-toggle="modal" data-target="#modal">メンバー追加</button>
     </h2>
 </div>
+<?php if ($data['error']) { ?>
+    <div class="alert alert-danger" role="alert">
+        エラーが発生しました
+    </div>
+<?php } ?>
 <?php if ($data['isUpdate']) { ?>
     <div class="alert alert-success" role="alert">
         更新されました
+    </div>
+<?php } ?>
+<?php if ($data['isRemove']) { ?>
+    <div class="alert alert-danger" role="alert">
+        削除されました
     </div>
 <?php } ?>
 <form action="/groups/detail/<?= $data['group']['group_id'] ?>" method="post">
@@ -15,22 +25,28 @@
     <table class="table table-striped groups">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>メンバーID</th>
                 <th>メンバー名</th>
                 <th>経路</th>
                 <!-- <th>アドレス</th> -->
-                <th></th>
+                <th class="btn-edit-col"></th>
             </tr>
         </thead>
         <tbody id='members'>
-            <?php foreach ($data['records'] as $row) { ?>
-              <tr>
-                <td><?=$row['member_id']?><input type="hidden" value="<?=$row['member_id']?>" name="data[id][]"></td>
-                <td><?=$row['name']?><input type="hidden" value="<?=$row['name']?>" name="data[name][]"></td>
-                <td><?=$row['line']?><input type="hidden" value="<?=$row['line']?>" name="data[route][]"></td>
-                <!-- <td><?=$row['mail']?></td> -->
-                <td><input type="button" class="btn del" value="×"></td>
-              </tr>
+            <?php if (count($data['records']) > 0) { ?>
+                <?php foreach ($data['records'] as $row) { ?>
+                  <tr>
+                    <td><?=$row['member_id']?><input type="hidden" value="<?=$row['member_id']?>" name="data[id][]"></td>
+                    <td><?=$row['name']?><input type="hidden" value="<?=$row['name']?>" name="data[name][]"></td>
+                    <td><?=$row['line']?><input type="hidden" value="<?=$row['line']?>" name="data[route][]"></td>
+                    <!-- <td><?=$row['mail']?><input type="hidden" value="<?=$row['mail']?>" name="data[mail][]"></td> -->
+                    <td><a href="/members/edit/<?=$row['member_id']?>" class="btn btn-default btn-sm">編集</a></td>
+                  </tr>
+                <?php } ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan="4" class="nothing">メンバーがいません</td>
+                </tr>
             <?php } ?>
         </tbody>
     </table>
@@ -49,7 +65,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="nam">メンバーID</label>
+                    <label for="num">メンバーID</label>
                     <input type="number" class="form-control" size="20" id="num" placeholder="社員No、学籍番号など">
                 </div>
                 <div class="form-group">
@@ -57,7 +73,7 @@
                     <input type="text" class="form-control" size="20" id="nam" placeholder="メンバーの名前を入力">
                 </div>
                 <div class="form-group">
-                    <label for="nam">経路</label>
+                    <label for="roc">経路</label>
                     <select class="routes" style="width: 100%" id="roc">
                         <?php foreach ($data['routes'] as $routes) { ?>
                             <option value="<?= $routes['name'] ?>"><?= $routes['name'] ?></option>

@@ -37,7 +37,7 @@
             <?php } ?>
         <?php } else { ?>
             <tr>
-                <td colspan="5">グループがありません</td>
+                <td colspan="4" class="nothing">グループがありません</td>
             </tr>
         <?php } ?>
     </tbody>

@@ -25,7 +25,9 @@ class GroupsController extends AppController
         $schedule = $model->find($sql);
 
         // パンくずリストを生成
-        $breadcrumb = array('end' => 'グループを編集');
+        $breadcrumb = array(
+            array('str' => 'グループを編集')
+        );
 
         // Viewと共有するデータをセット
         $this->set('group', $group);
@@ -77,7 +79,9 @@ EOT;
         $owners = (new Owners())->get();
 
         // パンくずリスト生成
-        $breadcrumb = array('end' => 'グループ新規作成');
+        $breadcrumb = array(
+            array('str' => 'グループ新規作成')
+        );
 
         // Viewと共有するデータをセット
         $this->set('owners', $owners);
@@ -96,8 +100,30 @@ EOT;
         // メンバー設定されてきたか
         $post = $this->getPost();
         if (isset($post['sub'])) {
-            $this->memberAdd($post['data']);
-            $this->set('isUpdate', true);
+            if ($this->memberAdd($post['data'])) {
+                $this->set('isUpdate', true);
+            } else {
+                $this->set('error', true);
+            }
+
+        }
+
+        // メンバー編集されてきたか
+        if (isset($post['edit'])) {
+            if ($this->memberEdit($post['data'])){
+                $this->set('isUpdate', true);
+            } else {
+                $this->set('error', true);
+            }
+        }
+
+        // メンバー削除されてきたか
+        if (isset($post['remove'])) {
+            if ($this->memberRemove($post['data'])){
+                $this->set('isRemove', true);
+            } else {
+                $this->set('error', true);
+            }
         }
 
         // グループの詳細情報を取得
@@ -136,7 +162,9 @@ EOT;
         $routes = $model->find($sql);
 
         // パンくずリスト生成
-        $breadcrumb = array('end' => 'メンバー一覧');
+        $breadcrumb = array(
+            array('str' => 'メンバー一覧')
+        );
 
         // Viewと共有するデータをセット
         $this->set('records', $new_arr);
@@ -220,7 +248,7 @@ EOT;
     /**
      * メンバー設定を保存する
      * @param  array $data POSTデータ
-     * @return void
+     * @return boolean 処理結果
      */
     private function memberAdd($data)
     {
@@ -228,10 +256,15 @@ EOT;
         $group_id = $this->getId();
         $model = new AppModel();
         $sql = "DELETE FROM `members` WHERE `group_id` = $group_id";
-        $model->query($sql);
-        if (count($data) == 0) {
-            return;
+        if (!$model->query($sql)){
+            return false;
         }
+
+        // 追加するメンバーがいなければ(メンバーが全て削除されてきたとき)処理終了
+        if (count($data) == 0) {
+            return true;
+        }
+
         // ルートの名前からIDを取得
         $sql = "SELECT `route_id`, `name` FROM `routes`";
         $routes = $model->find($sql);
@@ -262,5 +295,63 @@ EOT;
                 $model->query($sql);
             }
         }
+        return true;
+    }
+
+    /**
+     * メンバー削除確定処理
+     * @param  array $post POSTデータ
+     * @return boolean 処理実行結果
+     */
+    private function memberRemove($data)
+    {
+        $sql = "DELETE FROM `members` WHERE `member_id` = {$data['member_id']}";
+        $model = new AppModel();
+        if (!$model->query($sql)) {
+            return false;
+        }
+        return true;
+    }
+
+    private function memberEdit($data)
+    {
+        // メンバー情報を更新
+        $sql = "UPDATE `members`
+                SET `member_id` = '{$data['member']['id']}',
+                    `name` = '{$data['member']['name']}'
+                WHERE `member_id` = {$data['member_id']}";
+        $model = new AppModel();
+        if (!$model->query($sql)) {
+            var_dump('update');
+            return false;
+        }
+
+        // 一旦メンバーの経路情報を削除
+        $sql = "DELETE FROM `member_route` WHERE `member_id` = {$data['member_id']}";
+        $model = new AppModel();
+        if (!$model->query($sql)) {
+            var_dump('delete');
+            return false;
+        }
+        // 登録し直す
+        // ルートの名前からIDを取得
+        $sql = "SELECT `route_id`, `name` FROM `routes`";
+        $routes = $model->find($sql);
+        foreach ($data['member']['routes'] as &$target) {
+            foreach ($routes as $route) {
+                if ($route['name'] == $target) {
+                    $target = $route['route_id'];
+                }
+            }
+        }
+        unset($target);
+        foreach ($data['member']['routes'] as $route) {
+            $sql = "INSERT INTO `member_route` values({$data['member']['id']}, {$route})";
+            if (!$model->query($sql)) {
+                var_dump($sql);
+                return false;
+            }
+        }
+        return true;
     }
 }

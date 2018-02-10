@@ -22,8 +22,8 @@ class CronController extends AppController
     public function __construct()
     {
         parent::__construct();
-        $this->url = "https://rti-giken.jp/fhc/api/train_tetsudo/delay.json";
-        // $this->url = "../Config/delay.json";
+        // $this->url = "https://rti-giken.jp/fhc/api/train_tetsudo/delay.json";
+        $this->url = "../Config/delay.json";
         $this->not_start_group = array();
         $now = date('H:i');
 

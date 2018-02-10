@@ -120,3 +120,9 @@ th, td{
     margin-top: 5px;
     margin-bottom: 0;
 }
+
+/* 表データなし */
+.nothing {
+    text-align: center;
+    height: 100px;
+}

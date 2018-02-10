@@ -22,6 +22,7 @@ $(function(){
         $('#num').val('');
         $('#nam').val('');
         $('#roc').val(null).trigger('change');
+        $('.nothing').parent().remove();
         isChanged = true;
     };
 
