@@ -88,3 +88,28 @@
         </div>
     </div>
 </div>
+<!-- グループ作成時のメッセージ  -->
+<?php if ($data['isCreated']) : ?>
+    <div class="modal fade" id="create-msg">
+        <div class="modal-dialog" role="dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">作成完了</h4>
+                </div>
+                <div class="modal-body">
+                    <p>グループが作成されました。<br>右上のメンバー追加ボタンからメンバーを追加してください。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="create-msg-btn" class="hidden" data-toggle="modal" data-target="#create-msg">表示</button>
+    <script type="text/javascript">
+        $(function() {
+            $('#create-msg-btn').click();
+        });
+    </script>
+<?php endif; ?>

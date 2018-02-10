@@ -71,6 +71,7 @@ EOT;
         $post = $this->getPost();
         if (isset($post['sub'])) {
             $group_id = $this->groupAdd($post['data']);
+            $_SESSION['group_created'] = true;
             header("Location:/groups/detail/$group_id");
             return;
         }
@@ -97,6 +98,12 @@ EOT;
      */
     public function detailAction()
     {
+        // グループ作成されてきたか
+        if (isset($_SESSION['group_created']) && $_SESSION['group_created'] === true) {
+            $this->set('isCreated', true);
+            unset($_SESSION['group_created']);
+        }
+
         // メンバー設定されてきたか
         $post = $this->getPost();
         if (isset($post['sub'])) {
